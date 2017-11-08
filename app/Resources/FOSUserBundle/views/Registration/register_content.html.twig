@@ -15,12 +15,12 @@
     {% endfor %}
 </select>
 <br><br><br>
-
+<div id="themediv">
 <select id="region">
     <option>Select a region</option>
     <option></option>
 </select>
-
+</div>
 
 
 
@@ -43,18 +43,24 @@
         if ($('#country').change(function(){
              $.ajax({
                  type: "get",
-
                  url: "http://127.0.0.1:8000/ville/" + $('#country').val(),
                  beforeSend: function () {
-                     console.log("1");
+                     $('#themediv').append('<div id="loading" style=" float: left; display: block;"><img src="{{ asset('bundles/BackBundle/img/200.gif') }}"/></div>');
+
                  },
                  success: function (data) {
 
-
+                     $('#region').empty();
+                     $('#region').append($("<option></option>")
+                         .attr("value", '').text('Please Select'));
                      $.each(data, function (index, value) {
-
+                         var opts = $.parseJSON(data);
                          //console.log(value);
-                         $('#region').append('<option >' + value + '</option>');
+
+                         $('#region').append('<option value="' + value + '" >' + value + '</option>');
+                            console.log(value);
+                         $('#loading').remove();
+
 
                      });
 
