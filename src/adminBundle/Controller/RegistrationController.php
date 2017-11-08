@@ -122,19 +122,76 @@ class RegistrationController extends Controller
 
     public function regionAction(Request $request,$idc)
     {
-       $em=$this->getDoctrine()->getManager();
-       $region=$em->getRepository("adminBundle:regions")->findBy(
-           array('country_reg' => $idc));
+
+
+
+        $em = $this->getDoctrine()->getManager();
+       $region = $em->createQuery('select o
+                                           From adminBundle\Entity\regions o
+                                           where o.country_reg = :idd')
+            ->setParameter('idd', $idc)
+            ->getResult();
         if($region)
         {
-           $reg=$region;
+               $reg=$region;
+
         }else{
             $reg=null;
         }
-        $response = new JsonResponse();
-        return $response->setData(array('region'=> $reg));
+        $serializer = $this->get('jms_serializer');
+        $response = $serializer->serialize($reg,'json');
+        return new Response($response);
+
+
 
     }
+
+    public function districtAction(Request $request,$idc)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $district = $em->createQuery('select o
+                                           From adminBundle\Entity\districts o
+                                           where o.district_region = :idd')
+            ->setParameter('idd', $idc)
+            ->getResult();
+        if($district)
+        {
+            $des=$district;
+
+        }else{
+            $des=null;
+        }
+        $serializer = $this->get('jms_serializer');
+        $response = $serializer->serialize($des,'json');
+        return new Response($response);
+
+
+
+    }
+
+    public function cityAction(Request $request,$idc)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cities = $em->createQuery('select o
+                                           From adminBundle\Entity\cities o
+                                           where o.district_cities = :idd')
+            ->setParameter('idd', $idc)
+            ->getResult();
+        if($cities)
+        {
+            $city=$cities;
+
+        }else{
+            $city=null;
+        }
+        $serializer = $this->get('jms_serializer');
+        $response = $serializer->serialize($city,'json');
+        return new Response($response);
+
+
+
+    }
+
 
     /**
      * Tell the user to check their email provider.

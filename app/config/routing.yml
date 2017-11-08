@@ -18,3 +18,11 @@ fos_user:
 getregion:
     path: /ville/{idc}
     defaults: { _controller : adminBundle:Registration:region}
+
+getdistrict:
+    path: /district/{idc}
+    defaults: { _controller : adminBundle:Registration:district}
+
+getcity:
+    path: /city/{idc}
+    defaults: { _controller : adminBundle:Registration:city}

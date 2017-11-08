@@ -17,14 +17,25 @@
 <br><br><br>
 <div id="themediv">
 <select id="region">
-    <option>Select a region</option>
+    <option selected value="0" >Select a region</option>
+    <option></option>
+</select>
+</div>
+<br><br>
+    <select id="district">
+        <option selected value="0" >Select a district</option>
+        <option></option>
+    </select>
+
+
+<br><br>
+<select id="city">
+    <option selected value="0" >Select a city</option>
     <option></option>
 </select>
 </div>
 
 
-
-<br><br>
 <br><br>
 <div>
     <input type="submit" class="btn btn-primary" value="{{ 'registration.submit'|trans }}" />
@@ -35,6 +46,7 @@
 
 {{ form_end(form) }}
 </div>
+</div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script>
@@ -42,26 +54,20 @@
     $(document).ready(function () {
         if ($('#country').change(function(){
              $.ajax({
-                 type: "get",
+                 type: "GET",
+                 dataType: 'json',
                  url: "http://127.0.0.1:8000/ville/" + $('#country').val(),
                  beforeSend: function () {
-                     $('#themediv').append('<div id="loading" style=" float: left; display: block;"><img src="{{ asset('bundles/BackBundle/img/200.gif') }}"/></div>');
-
+                     $('#themediv').append('<div id="loading" style=" float: left; display: block;"></div>');
                  },
                  success: function (data) {
 
                      $('#region').empty();
-                     $('#region').append($("<option></option>")
-                         .attr("value", '').text('Please Select'));
-                     $.each(data, function (index, value) {
-                         var opts = $.parseJSON(data);
-                         //console.log(value);
-
-                         $('#region').append('<option value="' + value + '" >' + value + '</option>');
-
+                     $('#region').append("<option value='0'> Select a region </option>");
+                     $.each(data, function (index, item) {
+                         data = $.parseJSON(data);
+                         $('#region').append('<option value="' + item.id + '" >' + item.name + '</option>');
                          $('#loading').remove();
-
-
                      });
 
                  }
@@ -69,32 +75,117 @@
             }));else {
 
         }
+        if ($('#region').change(function(){
+                $.ajax({
+                    type: "GET",
+                    dataType: 'json',
+                    url: "http://127.0.0.1:8000/district/" + $('#region').val(),
+                    beforeSend: function () {
+                        $('#themediv').append('<div id="loading" style=" float: left; display: block;"></div>');
+                    },
+                    success: function (data) {
+                        $('#district').empty();
+                        $('#district').append("<option value='0'> Select a region </option>");
+                        $.each(data, function (index, item) {
+                            data = $.parseJSON(data);
+                            $('#district').append('<option value="' + item.id + '" >' + item.name + '</option>');
+                            $('#loading').remove();
+                        });
 
+                    }
+                })
+            }));else {
 
-    });
-    var update_country = function () {
-
-        if ($('#country').val() != 0){
-            // do something
-            $("#region").removeAttr("disabled");
-
-        } else {
-            $("#region").attr('disabled', 'disabled');
-            // do something else
         }
-    };
+
+        if ($('#district').change(function(){
+                $.ajax({
+                    type: "GET",
+                    dataType: 'json',
+                    url: "http://127.0.0.1:8000/city/" + $('#district').val(),
+                    beforeSend: function () {
+                        $('#themediv').append('<div id="loading" style=" float: left; display: block;"></div>');
+                    },
+                    success: function (data) {
+                        $('#city').empty();
+                        $('#city').append("<option value='0'> Select a city </option>");
+                        $.each(data, function (index, item) {
+                            data = $.parseJSON(data);
+                            $('#city').append('<option value="' + item.id + '" >' + item.name + '</option>');
+                            $('#loading').remove();
+                        });
+
+                    }
+                })
+            }));else {
+
+        }
 
 
-    $(update_country);
-    $("#country").change(update_country);
-    $("#country").select2({
-        placeholder: "Select a country",
-        allowClear: true
+        var update_region = function () {
+            if ($('#country').val() != 0){
+                // do something
+                $("#region").removeAttr("disabled");
+
+            } else {
+                $("#region").attr('disabled', 'disabled');
+
+                // do something else
+            }
+        };
+        $(update_region);
+        $("#country").change(update_region);
+
+
+        var update_district = function () {
+            if ($('#region').val() != 0){
+                // do something
+                $("#district").removeAttr("disabled");
+
+            } else {
+                $("#district").attr('disabled', 'disabled');
+
+                // do something else
+            }
+        };
+
+
+        $(update_district);
+        $("#region").change(update_district);
+
+        var update_city= function () {
+            if($('#district').val() != 0){
+                $('#city').removeAttr("disabled");
+            }else {
+                $('#city').attr('disabled','disabled')
+            }
+        };
+        $(update_city);
+        $("#district").change(update_city);
+
+
+        $("#country").select2({
+            placeholder: "Select a country",
+            allowClear: true
+        });
+        $("#region").select2({
+            placeholder: "Select a region",
+            allowClear: true
+        });
+        $("#district").select2({
+            placeholder: "Select a district",
+            allowClear: true
+        });
+       $("#city").select2({
+           placeholder: "Select a district",
+           allowClear: true
+       })
     });
-    $("#region").select2({
-        placeholder: "Select a region",
-        allowClear: true
-    });
+
+
+
+
+
 
 </script>
 
