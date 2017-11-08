@@ -1,0 +1,118 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    {{ form_widget(form) }}
+
+
+<select id="country" >
+    <option selected value="0"  >Please select country</option>
+    {% for country in country %}
+        <option value="{{ country.id }}">{{ country.name }}</option>
+    {% endfor %}
+</select>
+<br><br><br>
+
+<select id="region">
+    <option>Select a region</option>
+    <option></option>
+</select>
+
+
+
+
+<br><br>
+<br><br>
+<div>
+    <input type="submit" class="btn btn-primary" value="{{ 'registration.submit'|trans }}" />
+</div>
+
+
+
+
+{{ form_end(form) }}
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        if ($('#country').change(function(){
+             $.ajax({
+                 type: "get",
+
+                 url: "http://127.0.0.1:8000/ville/" + $('#country').val(),
+                 beforeSend: function () {
+                     console.log("1");
+                 },
+                 success: function (data) {
+
+
+                     $.each(data, function (index, value) {
+
+                         //console.log(value);
+                         $('#region').append('<option >' + value + '</option>');
+
+                     });
+
+                 }
+             })
+            }));else {
+
+        }
+
+
+    });
+    var update_country = function () {
+
+        if ($('#country').val() != 0){
+            // do something
+            $("#region").removeAttr("disabled");
+
+        } else {
+            $("#region").attr('disabled', 'disabled');
+            // do something else
+        }
+    };
+
+
+    $(update_country);
+    $("#country").change(update_country);
+    $("#country").select2({
+        placeholder: "Select a country",
+        allowClear: true
+    });
+    $("#region").select2({
+        placeholder: "Select a region",
+        allowClear: true
+    });
+
+</script>
+
+
+
+
+<!--
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>
+
+    var update_country = function () {
+
+        if ($('#country').val() != 0){
+        // do something
+            $("#region").removeAttr("disabled");
+
+        } else {
+            $("#region").attr('disabled', 'disabled');
+        // do something else
+    }
+    };
+
+
+    $(update_country);
+    $("#country").change(update_country);
+</script>
+!-->
