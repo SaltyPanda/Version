@@ -127,10 +127,7 @@ class RegistrationController extends Controller
            array('country_reg' => $idc));
         if($region)
         {
-            foreach ($region as $item)
-            {
-                $reg[]=array($item->getName());
-            }
+           $reg=$region;
         }else{
             $reg=null;
         }
