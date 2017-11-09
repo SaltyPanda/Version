@@ -77,6 +77,11 @@ class RegistrationController extends Controller
 
                 $userManager->updateUser($user);
 
+                $role='ROLE_CUSTOMER';
+                $user->addRole($role);
+                $connexion->persist($user);
+                $connexion->flush();
+
                 if (null === $response = $event->getResponse()) {
                     $url = $this->generateUrl('fos_user_registration_confirmed');
                     $response = new RedirectResponse($url);

@@ -180,11 +180,22 @@ class Hotels
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="adminBundle\Entity\HotelTypes",inversedBy="type_hotel")
+     * @ORM\ManyToOne(targetEntity="adminBundle\Entity\seasons",inversedBy="type_hotel")
      * @ORM\JoinColumn(name="type_id",referencedColumnName="id")
      */
     private $hotel_type;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\Hotels", mappedBy="season_hotel")
+     */
+    private $hotel_season;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\rooms", mappedBy="room_hotel")
+     */
+    private $hotel_room;
 
 
 

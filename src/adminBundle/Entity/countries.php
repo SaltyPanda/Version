@@ -72,6 +72,8 @@ class countries
     private $country_hotel;
 
 
+
+
     public function __construct() {
         $this->country_region = new ArrayCollection();
     }
