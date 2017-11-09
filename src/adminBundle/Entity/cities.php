@@ -56,6 +56,12 @@ class cities
     private $city_hotel;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\User", mappedBy="user_city")
+     */
+    private $city_user;
+
+    /**
      * Get id
      *
      * @return int
@@ -159,6 +165,22 @@ class cities
     public function setCityHotel($city_hotel)
     {
         $this->city_hotel = $city_hotel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCityUser()
+    {
+        return $this->city_user;
+    }
+
+    /**
+     * @param mixed $city_user
+     */
+    public function setCityUser($city_user)
+    {
+        $this->city_user = $city_user;
     }
 
 

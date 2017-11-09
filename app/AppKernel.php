@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new frontendBundle\frontendBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+
 
         ];
 

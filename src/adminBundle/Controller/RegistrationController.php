@@ -79,6 +79,25 @@ class RegistrationController extends Controller
 
                 $role='ROLE_CUSTOMER';
                 $user->addRole($role);
+
+                $c=$request->request->get('c');
+
+                $r=$request->request->get('r');
+                $d=$request->request->get('d');
+                $cy=$request->request->get('cy');
+
+
+
+                $country=$connexion->getRepository('adminBundle:countries')->find($c);
+                $region=$connexion->getRepository('adminBundle:regions')->find($r);
+                $district=$connexion->getRepository('adminBundle:districts')->find($d);
+                $citites=$connexion->getRepository('adminBundle:cities')->find($cy);
+
+                $user->setUserCountry($country);
+                $user->setUserRegion($region);
+                $user->setUserDistrict($district);
+                $user->setUserCity($citites);
+
                 $connexion->persist($user);
                 $connexion->flush();
 

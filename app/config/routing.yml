@@ -18,6 +18,8 @@ fos_user:
 getregion:
     path: /ville/{idc}
     defaults: { _controller : adminBundle:Registration:region}
+    options:
+            expose: true
 
 getdistrict:
     path: /district/{idc}
@@ -26,3 +28,6 @@ getdistrict:
 getcity:
     path: /city/{idc}
     defaults: { _controller : adminBundle:Registration:city}
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

@@ -134,6 +134,27 @@ class User extends BaseUser
     private $user_country;
 
     /**
+     * Many user have One region.
+     * @ORM\ManyToOne(targetEntity="adminBundle\Entity\regions", inversedBy="region_user")
+     * @ORM\JoinColumn(name="region_user", referencedColumnName="id")
+     */
+    private $user_region;
+
+    /**
+     * Many user have One region.
+     * @ORM\ManyToOne(targetEntity="adminBundle\Entity\districts", inversedBy="district_user")
+     * @ORM\JoinColumn(name="district_user", referencedColumnName="id")
+     */
+    private $user_district;
+
+    /**
+     * Many user have One region.
+     * @ORM\ManyToOne(targetEntity="adminBundle\Entity\cities", inversedBy="city_user")
+     * @ORM\JoinColumn(name="city_user", referencedColumnName="id")
+     */
+    private $user_city;
+
+    /**
      * @return string
      */
     public function getCompany()
@@ -355,6 +376,54 @@ class User extends BaseUser
     public function setUserCountry($user_country)
     {
         $this->user_country = $user_country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserRegion()
+    {
+        return $this->user_region;
+    }
+
+    /**
+     * @param mixed $user_region
+     */
+    public function setUserRegion($user_region)
+    {
+        $this->user_region = $user_region;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserDistrict()
+    {
+        return $this->user_district;
+    }
+
+    /**
+     * @param mixed $user_district
+     */
+    public function setUserDistrict($user_district)
+    {
+        $this->user_district = $user_district;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserCity()
+    {
+        return $this->user_city;
+    }
+
+    /**
+     * @param mixed $user_city
+     */
+    public function setUserCity($user_city)
+    {
+        $this->user_city = $user_city;
     }
 
 

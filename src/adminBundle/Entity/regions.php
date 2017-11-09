@@ -51,6 +51,13 @@ class regions
      */
     public $country_reg;
 
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\User", mappedBy="user_region")
+     */
+    private $region_user;
+
     /**
      * @return mixed
      */
@@ -192,6 +199,22 @@ class regions
     public function setRegionHotel($region_hotel)
     {
         $this->region_hotel = $region_hotel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegionUser()
+    {
+        return $this->region_user;
+    }
+
+    /**
+     * @param mixed $region_user
+     */
+    public function setRegionUser($region_user)
+    {
+        $this->region_user = $region_user;
     }
 
 

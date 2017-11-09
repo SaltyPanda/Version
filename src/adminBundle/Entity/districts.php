@@ -65,6 +65,14 @@ class districts
     private $district_hotel;
 
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\User", mappedBy="user_district")
+     */
+    private $district_user;
+
+
+
     public function __construct() {
         $this->district_cit = new ArrayCollection();
     }
@@ -197,6 +205,23 @@ class districts
     {
         $this->district_hotel = $district_hotel;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDistrictUser()
+    {
+        return $this->district_user;
+    }
+
+    /**
+     * @param mixed $district_user
+     */
+    public function setDistrictUser($district_user)
+    {
+        $this->district_user = $district_user;
+    }
+
 
 
 
