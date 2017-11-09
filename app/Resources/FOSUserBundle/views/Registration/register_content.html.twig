@@ -2,9 +2,9 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-
 <div class="container">
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register','data-toggle': 'validator','role': 'form'}}) }}
     {{ form_widget(form) }}
 
 
@@ -44,13 +44,27 @@
 {{ form_end(form) }}
 </div>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
+
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 <script>
 
     $(document).ready(function () {
+
+        $('.fos_user_registration_register').validator().on('submit', function (e) {
+            if (e.isDefaultPrevented()) {
+                // handle the invalid form...
+            } else {
+
+            }
+        })
         if ($('#country').change(function(){
              $.ajax({
                  type: "GET",
@@ -65,7 +79,7 @@
                      $('#region').empty();
                      $('#region').append("<option value='0'> Select a region </option>");
                      $.each(data, function (index, item) {
-                         data = $.parseJSON(data);
+
                          $('#region').append('<option value="' + item.id + '" >' + item.name + '</option>');
                          $('#loading').remove();
                      });
@@ -87,7 +101,6 @@
                         $('#district').empty();
                         $('#district').append("<option value='0'> Select a region </option>");
                         $.each(data, function (index, item) {
-                            data = $.parseJSON(data);
                             $('#district').append('<option value="' + item.id + '" >' + item.name + '</option>');
                             $('#loading').remove();
                         });
@@ -110,7 +123,6 @@
                         $('#city').empty();
                         $('#city').append("<option value='0'> Select a city </option>");
                         $.each(data, function (index, item) {
-                            data = $.parseJSON(data);
                             $('#city').append('<option value="' + item.id + '" >' + item.name + '</option>');
                             $('#loading').remove();
                         });

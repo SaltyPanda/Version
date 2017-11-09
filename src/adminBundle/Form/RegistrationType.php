@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RegistrationType extends AbstractType
@@ -20,7 +21,7 @@ class RegistrationType extends AbstractType
         ->add('adresse')
         ->add('zip')
         ->add('nametitel')
-        ->add('name')
+        ->add('name',NumberType::class)
         ->add('email2')
         ->add('web')
         ->add('tp')
