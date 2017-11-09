@@ -42,6 +42,12 @@ class currencyrates
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity="adminBundle\Entity\currencies")
+     * @ORM\JoinColumn(name="currencies_id", referencedColumnName="id")
+     */
+    private $products;
+
 
 
 
