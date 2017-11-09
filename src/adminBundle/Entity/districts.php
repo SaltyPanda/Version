@@ -58,6 +58,13 @@ class districts
      */
     private $district_cit;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\Hotels", mappedBy="hotel_district")
+     */
+    private $district_hotel;
+
+
     public function __construct() {
         $this->district_cit = new ArrayCollection();
     }
@@ -174,6 +181,24 @@ class districts
     {
         $this->district_cit = $district_cit;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDistrictHotel()
+    {
+        return $this->district_hotel;
+    }
+
+    /**
+     * @param mixed $district_hotel
+     */
+    public function setDistrictHotel($district_hotel)
+    {
+        $this->district_hotel = $district_hotel;
+    }
+
+
 
 }
 

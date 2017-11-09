@@ -50,6 +50,12 @@ class cities
     private $district_cities;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\Hotels", mappedBy="hotel_city")
+     */
+    private $city_hotel;
+
+    /**
      * Get id
      *
      * @return int
@@ -138,6 +144,23 @@ class cities
     {
         $this->district_cities = $district_cities;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCityHotel()
+    {
+        return $this->city_hotel;
+    }
+
+    /**
+     * @param mixed $city_hotel
+     */
+    public function setCityHotel($city_hotel)
+    {
+        $this->city_hotel = $city_hotel;
+    }
+
 
 
 }

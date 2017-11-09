@@ -64,6 +64,14 @@ class countries
      */
     private $country_region;
 
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\Hotels", mappedBy="hotel_country")
+     */
+    private $country_hotel;
+
+
     public function __construct() {
         $this->country_region = new ArrayCollection();
     }
@@ -197,6 +205,23 @@ class countries
     {
         $this->country_region = $country_region;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCountryHotel()
+    {
+        return $this->country_hotel;
+    }
+
+    /**
+     * @param mixed $country_hotel
+     */
+    public function setCountryHotel($country_hotel)
+    {
+        $this->country_hotel = $country_hotel;
+    }
+
 
 
 }

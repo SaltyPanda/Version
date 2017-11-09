@@ -74,6 +74,14 @@ class regions
      */
     private $district_region;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="adminBundle\Entity\Hotels", mappedBy="hotel_region")
+     */
+    private $region_hotel;
+
+
+
     public function __construct() {
         $this->district_region = new ArrayCollection();
     }
@@ -169,6 +177,23 @@ class regions
     {
         $this->district_region = $district_region;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRegionHotel()
+    {
+        return $this->region_hotel;
+    }
+
+    /**
+     * @param mixed $region_hotel
+     */
+    public function setRegionHotel($region_hotel)
+    {
+        $this->region_hotel = $region_hotel;
+    }
+
 
 
 }
