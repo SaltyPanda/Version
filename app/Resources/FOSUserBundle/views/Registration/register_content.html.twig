@@ -2,6 +2,14 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+ 
+    form .error {
+        color: #ff0000;
+    }
+
+</style>
+
 <div class="container">
 
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register','data-toggle': 'validator','role': 'form'}}) }}
@@ -50,7 +58,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
 
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
@@ -58,13 +66,17 @@
 
     $(document).ready(function () {
 
-        $('.fos_user_registration_register').validator().on('submit', function (e) {
-            if (e.isDefaultPrevented()) {
-                // handle the invalid form...
-            } else {
 
+
+        $(".fos_user_registration_register").validate({
+
+            submitHandler: function(form) {
+                // some other code
+                // maybe disabling submit button
+                // then:
+                $(form).submit();
             }
-        })
+        });
         if ($('#country').change(function(){
              $.ajax({
                  type: "GET",
