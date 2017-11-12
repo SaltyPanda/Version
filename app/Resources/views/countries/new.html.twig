@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <style>
+
+
+        form .error {
+            color: #ff0000;
+        }
+
+    </style>
+    <h1>Country creation</h1>
+
+    {{ form_start(form, {'attr': {'id': 'form_countries_create'}}) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" />
+        <input type="reset"  id="reset" value="reset" />
+
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('countries_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            var validator = $("#form_countries_create").validate({
+                rules: {
+
+                    'adminbundle_countries[code]': {
+                        required: true,
+                        minlength: 2
+                    },
+                    'adminbundle_countries[name]': {
+                        required: true,
+                        minlength: 2
+                    }
+                },
+                messages: {
+                    'adminbundle_countries[code]': {
+                        required: "Please specify countries code",
+                        minlength: "please enter at least 2 characters"
+                    },
+                    'adminbundle_countries[name]': {
+                        required: "Please specify countries name",
+                        minlength: "please enter at least 2 characters"
+                    }
+
+                },
+                submitHandler: function (form) {
+                    // some other code
+                    // maybe disabling submit button
+                    // then:
+
+                    $(form).submit();
+                }
+
+            });
+            $("#reset").click(function () {
+                validator.resetForm();
+            });
+        });
+    </script>
+{% endblock %}

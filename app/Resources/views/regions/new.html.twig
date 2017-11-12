@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+{% endblock %}
+{% block body %}
+
+    <style>
+
+
+        form .error {
+            color: #ff0000;
+        }
+
+    </style>
+    <h1>Region creation</h1>
+
+    {{ form_start(form, {'attr': {'id': 'form_region_create'}}) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" />
+    <input type="reset"  id="reset" value="reset" />
+
+
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('regions_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
+{% block javascripts %}
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            var validator = $("#form_region_create").validate({
+                rules: {
+
+                    'adminbundle_regions[name]': {
+                        required: true,
+                        minlength: 2
+                    }
+
+                },
+                messages: {
+                    'adminbundle_regions[name]': {
+                        required: "Please specify countries name",
+                        minlength: "please enter at least 2 characters"
+                    }
+
+                },
+                submitHandler: function (form) {
+                    // some other code
+                    // maybe disabling submit button
+                    // then:
+
+                    $(form).submit();
+                }
+
+            });
+            $("#reset").click(function () {
+                validator.resetForm();
+
+            });
+
+            $("#adminbundle_regions_country_reg").select2({
+                placeholder: "Select a country",
+                allowClear: true
+            });
+
+        });
+
+    </script>
+{% endblock %}
