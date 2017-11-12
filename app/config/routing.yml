@@ -1,3 +1,19 @@
+admin_cities:
+    resource: "@adminBundle/Controller/citiesController.php"
+    type:     annotation
+
+admin_districts:
+    resource: "@adminBundle/Controller/districtsController.php"
+    type:     annotation
+
+admin_regions:
+    resource: "@adminBundle/Controller/regionsController.php"
+    type:     annotation
+
+admin_countries:
+    resource: "@adminBundle/Controller/countriesController.php"
+    type:     annotation
+
 frontend:
     resource: "@frontendBundle/Controller/"
     type:     annotation
@@ -28,6 +44,12 @@ getdistrict:
 getcity:
     path: /city/{idc}
     defaults: { _controller : adminBundle:Registration:city}
+
+getcounties:
+    path: /count/{idc}
+    defaults: { _controller : adminBundle:Default:getc}
+    options:
+                expose: true
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

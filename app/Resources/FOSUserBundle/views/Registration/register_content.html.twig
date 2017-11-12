@@ -15,35 +15,36 @@
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register','data-toggle': 'validator','role': 'form'}}) }}
     {{ form_widget(form) }}
 
-
-<select id="country" name="c">
-    <option selected value="0"  >Please select country</option>
+<label id="er" class="error"></label>
+<select id="country" name="c" required>
+    <option selected value=""  >Please select country</option>
     {% for country in country %}
         <option value="{{ country.id }}">{{ country.name }}</option>
     {% endfor %}
 </select>
 <br><br><br>
 <div id="themediv">
-<select id="region" name="r">
-    <option selected value="0" >Select a region</option>
+<select id="region" name="r" required>
+    <option selected value="" >Select a region</option>
 </select>
 </div>
 <br><br>
-    <select id="district" name="d">
-        <option selected value="0" >Select a district</option>
+    <select id="district" name="d" required>
+        <option selected value="" >Select a district</option>
     </select>
 
 
 <br><br>
-<select id="city" name="cy">
-    <option selected value="0" >Select a city</option>
+<select id="city" name="cy" required>
+    <option selected value="" >Select a city</option>
 </select>
 </div>
 
 
 <br><br>
 <div>
-    <input type="submit" class="btn btn-primary" value="{{ 'registration.submit'|trans }}" />
+    <input type="submit" id="register" class="btn btn-primary" value="{{ 'registration.submit'|trans }}" />
+    <button type="reset" id="reset" class="btn btn-warning" value="Reset">Reset</button>
 </div>
 
 
@@ -68,14 +69,143 @@
 
 
 
-        $(".fos_user_registration_register").validate({
 
+        var validator =$(".fos_user_registration_register").validate({
+            rules: {
+
+                'fos_user_registration_form[username]':{
+                        required:true,
+                        minlength: 2
+                },
+                'fos_user_registration_form[plainPassword][first]':{
+                        required:true,
+                        minlength:6
+                },
+                'fos_user_registration_form[plainPassword][second]':{
+                    required:true,
+                    minlength:6,
+                    equalTo: "#fos_user_registration_form_plainPassword_first"
+                },
+                'fos_user_registration_form[fname]':{
+                    required:true,
+                    minlength: 2
+                },
+                'fos_user_registration_form[company]':{
+                    required:true,
+                    minlength: 2
+                },
+                'fos_user_registration_form[adresse]':{
+                    required:true,
+                    minlength: 2
+                },
+                'fos_user_registration_form[zip]':{
+                    required:true,
+                    number: true
+                },
+                'fos_user_registration_form[nametitel]':{
+                        required:true
+                },
+                'fos_user_registration_form[name]':{
+                    required:true
+
+                },
+                'fos_user_registration_form[email2]':{
+                    required:true,
+                    email: true
+                },
+                'fos_user_registration_form[web]':{
+                    required:true,
+                    url: true
+                },
+                'fos_user_registration_form[tp]':{
+                    required:true,
+                    number: true
+                },
+                'fos_user_registration_form[tp2]':{
+                    required:true,
+                    number: true
+                },
+                'fos_user_registration_form[fax]':{
+                    required:true,
+                    number: true
+                },
+                'fos_user_registration_form[logo]':{
+                    required:true
+                }
+
+
+            },
+            messages: {
+                'fos_user_registration_form[username]':{
+                    required: "Please specify your User name",
+                    minlength: "please enter at least 2 characters"
+                },
+                'fos_user_registration_form[plainPassword][first]':{
+                    required: "Please specify your password",
+                    minlength: "please enter at least 6 characters"
+                },
+                'fos_user_registration_form[plainPassword][second]':{
+                    required: "Please confirm your password",
+                    minlength: "please enter at least 6 characters",
+                    equalTo: "password does not match"
+                },
+                'fos_user_registration_form[fname]':{
+                    required: "Please specify your name",
+                    minlength: "please enter at least 2 characters"
+                },
+                'fos_user_registration_form[company]':{
+                    required:"Please specify your company",
+                    minlength: "please enter at least 2 characters"
+                },
+                'fos_user_registration_form[adresse]':{
+                    required:"Please specify your company",
+                    minlength: "please enter at least 2 characters"
+                },
+                'fos_user_registration_form[zip]':{
+                    required:"Please specify your company",
+                    number:"Please enter a nubmer"
+                },
+                'fos_user_registration_form[nametitel]':{
+                    required:"Please specify your title"
+                },
+                'fos_user_registration_form[name]':{
+                    required:"Please specify your name"
+
+                },
+                'fos_user_registration_form[email2]':{
+                    required:"Please specify your second email"
+                },
+                'fos_user_registration_form[web]':{
+                    required:"Please specify your web"
+                },
+                'fos_user_registration_form[tp]':{
+                    required:"Please specify your phone number"
+                },
+                'fos_user_registration_form[tp2]':{
+                    required:"Please specify your second phone number"
+                },
+                'fos_user_registration_form[fax]':{
+                    required:"Please specify your fax number"
+                },
+                'fos_user_registration_form[logo]':{
+                    required:"Please select your logo"
+                }
+
+            },
             submitHandler: function(form) {
                 // some other code
                 // maybe disabling submit button
                 // then:
-                $(form).submit();
-            }
+
+                    $(form).submit();
+                }
+
+            });
+        $("#reset").click(function() {
+            validator.resetForm();
+            $('#country').prop('selected', function() {
+                return this.defaultSelected;
+            });
         });
         if ($('#country').change(function(){
              $.ajax({
@@ -89,7 +219,7 @@
                  success: function (data) {
 
                      $('#region').empty();
-                     $('#region').append("<option value='0'> Select a region </option>");
+                     $('#region').append("<option value=''> Select a region </option>");
                      $.each(data, function (index, item) {
 
                          $('#region').append('<option value="' + item.id + '" >' + item.name + '</option>');
@@ -133,7 +263,7 @@
                     },
                     success: function (data) {
                         $('#city').empty();
-                        $('#city').append("<option value='0'> Select a city </option>");
+                        $('#city').append("<option value=''> Select a city </option>");
                         $.each(data, function (index, item) {
                             $('#city').append('<option value="' + item.id + '" >' + item.name + '</option>');
                             $('#loading').remove();
@@ -147,7 +277,7 @@
 
 
         var update_region = function () {
-            if ($('#country').val() != 0){
+            if ($('#country').val() != ""){
                 // do something
                 $("#region").removeAttr("disabled");
 
@@ -162,7 +292,7 @@
 
 
         var update_district = function () {
-            if ($('#region').val() != 0){
+            if ($('#region').val() != ""){
                 // do something
                 $("#district").removeAttr("disabled");
 
@@ -178,7 +308,7 @@
         $("#region").change(update_district);
 
         var update_city= function () {
-            if($('#district').val() != 0){
+            if($('#district').val() != ""){
                 $('#city').removeAttr("disabled");
             }else {
                 $('#city').attr('disabled','disabled')

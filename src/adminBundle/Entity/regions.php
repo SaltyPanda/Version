@@ -40,7 +40,7 @@ class regions
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="update_at", type="datetime")
+     * @ORM\Column(name="update_at", type="datetime",nullable=true)
      */
     private $update_At;
 

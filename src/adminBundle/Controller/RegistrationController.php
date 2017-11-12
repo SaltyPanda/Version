@@ -79,15 +79,18 @@ class RegistrationController extends Controller
 
                 $role='ROLE_CUSTOMER';
                 $user->addRole($role);
-
+                $file = $user->getLogo();
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move(
+                    $this->getParameter('logo_directory'),
+                    $fileName
+                );
+                $user->setLogo($fileName);
                 $c=$request->request->get('c');
 
                 $r=$request->request->get('r');
                 $d=$request->request->get('d');
                 $cy=$request->request->get('cy');
-
-
-
                 $country=$connexion->getRepository('adminBundle:countries')->find($c);
                 $region=$connexion->getRepository('adminBundle:regions')->find($r);
                 $district=$connexion->getRepository('adminBundle:districts')->find($d);
@@ -146,8 +149,6 @@ class RegistrationController extends Controller
 
     public function regionAction(Request $request,$idc)
     {
-
-
 
         $em = $this->getDoctrine()->getManager();
        $region = $em->createQuery('select o
